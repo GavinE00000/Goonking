@@ -9,7 +9,7 @@
             color: #ff0;
             font-family: Impact, "Comic Sans MS", Papyrus;
             text-align: center;
-            cursor: url('https://cur.cursors-4u.net/others/oth-2/oth165.cur'), auto;
+            cursor: url('https://www.cursors-4u.com/cursor/2005/05/30/oth4-11.html'), auto;
         }
         marquee {
             font-size: 50px;
@@ -20,7 +20,7 @@
             text-transform: uppercase;
         }
         .blink {
-            animation: blinker 0.5s infinite alternate;
+            animation: blinker 1s infinite alternate;
         }
         @keyframes blinker {
             from { opacity: 1; }
@@ -39,7 +39,7 @@
             width: 300px;
             position: absolute;
             left: 10px;
-            top: 50px;
+            top: 200px; /* Moved down so it doesn't block the header */
             border: 10px groove firebrick;
             text-align: left;
         }
@@ -64,7 +64,13 @@
         .skull {
             width: 400px;
         }
+        /* Add a hidden container for the Scratch project */
+        #phosphor-container {
+            margin-top: 20px;
+            display: none;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/phosphor@latest/dist/phosphor.min.js"></script>
 </head>
 <body>
     <marquee behavior="alternate" scrollamount="10">🔥🔥 WELCOME TO GOONKINGPILLS.COM 🔥🔥</marquee>
@@ -78,6 +84,7 @@
     <div class="sidebar">
         <h3>🔥 MENU 🔥</h3>
         <ul>
+            <li><a href="#" id="cookbook-link">💥<span class="blink">NEW!</span>💥 The Goonfather's Cookbook</a></li>
             <li><a href="#">Buy Pills</a></li>
             <li><a href="#">Testimonials</a></li>
             <li><a href="#">Side Effects</a></li>
@@ -91,8 +98,6 @@
     <p>"THESE PILLS PUNCHED ME IN THE FACE. I THANKED THEM." - Tommy Tuffguy</p>
     <p>"AFTER TAKING THIS, I BENCH PRESSED A CAR." - Johnny Powerlifter</p>
     
-
-    
     <h2>🔥 WARNING: SIDE EFFECTS INCLUDE 🔥</h2>
     <ul>
         <li>Instant Muscle Growth</li>
@@ -102,13 +107,12 @@
         <li>Permanent Goon Mode Activation</li>
     </ul>
     
-        <h2>VISITOR COUNTER:</h2>
+    <h2>VISITOR COUNTER:</h2>
     <div class="counter">
         <script>
             document.write(Math.floor(Math.random() * 100000) + 1);
         </script>
     </div>
-    
     
     <h2>🔥 SIGN OUR GUESTBOOK 🔥</h2>
     <div class="guestbook">
@@ -124,5 +128,35 @@
     <audio autoplay loop>
         <source src="https://www.midis101.com/play-midi/90083-bad-to-the-bone.mp3" type="audio/mpeg">
     </audio>
+    
+    <!-- Container for Scratch Project -->
+    <div id="phosphor-container"></div>
+
+    <script>
+        // Event listener for the "The Goonfather's Cookbook" link
+        document.getElementById('cookbook-link').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the default action of the link
+            
+            // Pause the background music when the game starts
+            document.querySelector('audio').pause();
+
+            // Path to your SB3 file (hosted on GitHub or elsewhere)
+            const sb3FileUrl = 'https://raw.githubusercontent.com/GavinE00000/Goonking/8a0a72921c3cbaf5115133e24713fa97693ed045/Whats%20Dylan%20Grillin%27_%20The%20Game%20(Version%201.2)(1).sb3';
+
+            // Create a new Phosphor player and load the SB3 file
+            const player = new Phosphor.Player(sb3FileUrl);
+            
+            // Handle loading success
+            player.load().then(() => {
+                player.mount(document.getElementById('phosphor-container'));
+                document.getElementById('phosphor-container').style.display = 'block';
+            }).catch(err => {
+                console.error('Failed to load SB3 file:', err);
+            });
+
+            // Optionally, hide the body or other content
+            document.body.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
