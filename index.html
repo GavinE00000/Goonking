@@ -9,7 +9,7 @@
             color: #ff0;
             font-family: Impact, "Comic Sans MS", Papyrus;
             text-align: center;
-            cursor: url('https://www.cursors-4u.com/cursor/2005/05/30/oth4-11.html'), auto;
+            cursor: url('https://cur.cursors-4u.net/others/oth-2/oth165.cur'), auto;
         }
         marquee {
             font-size: 50px;
@@ -20,7 +20,7 @@
             text-transform: uppercase;
         }
         .blink {
-            animation: blinker 1s infinite alternate;
+            animation: blinker 0.5s infinite alternate;
         }
         @keyframes blinker {
             from { opacity: 1; }
@@ -39,7 +39,7 @@
             width: 300px;
             position: absolute;
             left: 10px;
-            top: 200px; /* Moved down so it doesn't block the header */
+            top: 180px; /* Adjusted to move it down */
             border: 10px groove firebrick;
             text-align: left;
         }
@@ -64,7 +64,6 @@
         .skull {
             width: 400px;
         }
-        /* Add a hidden container for the Scratch project */
         #phosphor-container {
             margin-top: 20px;
             display: none;
@@ -84,7 +83,7 @@
     <div class="sidebar">
         <h3>🔥 MENU 🔥</h3>
         <ul>
-            <li><a href="#" id="cookbook-link">💥<span class="blink">NEW!</span>💥 The Goonfather's Cookbook</a></li>
+            <li><a href="#" id="cookbook-link">💥NEW!💥 The Goonfather's Cookbook</a></li>
             <li><a href="#">Buy Pills</a></li>
             <li><a href="#">Testimonials</a></li>
             <li><a href="#">Side Effects</a></li>
@@ -124,38 +123,33 @@
     </div>
     
     <p><strong>NOT FDA APPROVED. MAY CAUSE UNSTOPPABLE GOONING.</strong></p>
-    <img src="https://web.archive.org/web/20030326075726/http://in.geocities.com:80/healthrevolution/mall/virilitypills4.gif" alt="Under Construction"> <!-- Classic -->
+    <img src="https://web.archive.org/web/20030326075726/http://in.geocities.com:80/healthrevolution/mall/virilitypills4.gif" alt="Under Construction">
     <audio autoplay loop>
         <source src="https://www.midis101.com/play-midi/90083-bad-to-the-bone.mp3" type="audio/mpeg">
     </audio>
     
-    <!-- Container for Scratch Project -->
     <div id="phosphor-container"></div>
 
     <script>
         // Event listener for the "The Goonfather's Cookbook" link
         document.getElementById('cookbook-link').addEventListener('click', function(e) {
             e.preventDefault(); // Prevent the default action of the link
-            
-            // Pause the background music when the game starts
-            document.querySelector('audio').pause();
 
+            console.log('The Goonfather\'s Cookbook clicked');
+
+            // Hide other content if necessary (optional)
+            document.body.style.display = 'none';
+            
             // Path to your SB3 file (hosted on GitHub or elsewhere)
             const sb3FileUrl = 'https://raw.githubusercontent.com/GavinE00000/Goonking/8a0a72921c3cbaf5115133e24713fa97693ed045/Whats%20Dylan%20Grillin%27_%20The%20Game%20(Version%201.2)(1).sb3';
 
             // Create a new Phosphor player and load the SB3 file
             const player = new Phosphor.Player(sb3FileUrl);
-            
-            // Handle loading success
-            player.load().then(() => {
-                player.mount(document.getElementById('phosphor-container'));
-                document.getElementById('phosphor-container').style.display = 'block';
-            }).catch(err => {
-                console.error('Failed to load SB3 file:', err);
-            });
 
-            // Optionally, hide the body or other content
-            document.body.style.display = 'none';
+            player.mount(document.getElementById('phosphor-container'));
+
+            // Show the container with the Scratch project
+            document.getElementById('phosphor-container').style.display = 'block';
         });
     </script>
 </body>
