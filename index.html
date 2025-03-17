@@ -69,7 +69,6 @@
             display: none;
         }
     </style>
-    <!-- Load Phosphor Library -->
     <script src="https://cdn.jsdelivr.net/npm/phosphor@1.9.3/dist/phosphor.min.js"></script>
 </head>
 <body>
@@ -131,20 +130,28 @@
     
     <div id="phosphor-container"></div>
 
-    <!-- Check if Phosphor is loaded and initialize the player -->
     <script>
-        if (typeof Phosphor !== "undefined") {
-            document.getElementById('cookbook-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.body.style.display = 'none';
-                const sb3FileUrl = 'https://raw.githubusercontent.com/GavinE00000/Goonking/8a0a72921c3cbaf5115133e24713fa97693ed045/Whats%20Dylan%20Grillin%27_%20The%20Game%20(Version%201.2)(1).sb3';
-                const player = new Phosphor.Player(sb3FileUrl);
-                player.mount(document.getElementById('phosphor-container'));
-                document.getElementById('phosphor-container').style.display = 'block';
-            });
-        } else {
-            console.error('Phosphor library not loaded properly.');
-        }
+        // Event listener for the "The Goonfather's Cookbook" link
+        document.getElementById('cookbook-link').addEventListener('click', function(e) {
+            e.preventDefault();  // Prevent the default link behavior
+
+            console.log('The Goonfather\'s Cookbook clicked');
+
+            // Hide other content if necessary (optional)
+            document.body.style.display = 'none';
+
+            // Path to your SB3 file (hosted on GitHub or elsewhere)
+            const sb3FileUrl = 'https://raw.githubusercontent.com/GavinE00000/Goonking/8a0a72921c3cbaf5115133e24713fa97693ed045/Whats%20Dylan%20Grillin%27_%20The%20Game%20(Version%201.2)(1).sb3';
+
+            // Create a new Phosphor player and load the SB3 file
+            const player = new Phosphor.Player(sb3FileUrl);
+
+            // Mount the player to the container on your webpage
+            player.mount(document.getElementById('phosphor-container'));
+
+            // Show the container with the Scratch project
+            document.getElementById('phosphor-container').style.display = 'block';
+        });
     </script>
 </body>
 </html>
