@@ -39,7 +39,7 @@
             width: 300px;
             position: absolute;
             left: 10px;
-            top: 180px; /* Adjusted to move it down */
+            top: 180px;
             border: 10px groove firebrick;
             text-align: left;
         }
@@ -69,8 +69,8 @@
             display: none;
         }
     </style>
-    <!-- Link to Phosphor Widgets version 1.9.3 -->
-    <script src="https://cdn.jsdelivr.net/npm/@phosphor/widgets@1.9.3/lib/index.js"></script>
+    <!-- Load Phosphor Library -->
+    <script src="https://cdn.jsdelivr.net/npm/phosphor@1.9.3/dist/phosphor.min.js"></script>
 </head>
 <body>
     <marquee behavior="alternate" scrollamount="10">🔥🔥 WELCOME TO GOONKINGPILLS.COM 🔥🔥</marquee>
@@ -131,27 +131,20 @@
     
     <div id="phosphor-container"></div>
 
+    <!-- Check if Phosphor is loaded and initialize the player -->
     <script>
-        // Event listener for the "The Goonfather's Cookbook" link
-        document.getElementById('cookbook-link').addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent the default action of the link
-
-            console.log('The Goonfather\'s Cookbook clicked');
-
-            // Hide other content if necessary (optional)
-            document.body.style.display = 'none';
-            
-            // Path to your SB3 file (hosted on GitHub or elsewhere)
-            const sb3FileUrl = 'https://raw.githubusercontent.com/GavinE00000/Goonking/8a0a72921c3cbaf5115133e24713fa97693ed045/Whats%20Dylan%20Grillin%27_%20The%20Game%20(Version%201.2)(1).sb3';
-
-            // Create a new Phosphor player and load the SB3 file
-            const player = new Phosphor.Player(sb3FileUrl);
-
-            player.mount(document.getElementById('phosphor-container'));
-
-            // Show the container with the Scratch project
-            document.getElementById('phosphor-container').style.display = 'block';
-        });
+        if (typeof Phosphor !== "undefined") {
+            document.getElementById('cookbook-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.body.style.display = 'none';
+                const sb3FileUrl = 'https://raw.githubusercontent.com/GavinE00000/Goonking/8a0a72921c3cbaf5115133e24713fa97693ed045/Whats%20Dylan%20Grillin%27_%20The%20Game%20(Version%201.2)(1).sb3';
+                const player = new Phosphor.Player(sb3FileUrl);
+                player.mount(document.getElementById('phosphor-container'));
+                document.getElementById('phosphor-container').style.display = 'block';
+            });
+        } else {
+            console.error('Phosphor library not loaded properly.');
+        }
     </script>
 </body>
 </html>
