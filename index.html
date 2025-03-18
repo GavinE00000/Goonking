@@ -121,6 +121,22 @@
             height: 480px;
             overflow: hidden;
         }
+
+        /* Add styles for firing effect */
+        .fire-effect {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, red, yellow);
+            border-radius: 50%;
+            opacity: 1;
+            animation: fire 0.2s ease-out forwards;
+        }
+
+        @keyframes fire {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -180,6 +196,10 @@
         <source src="https://www.midis101.com/play-midi/90083-bad-to-the-bone.mp3" type="audio/mpeg">
     </audio>
     
+    <audio id="gun-sound">
+        <source src="https://media.memesoundeffects.com/2022/11/Pew-Sound-Sound-Effect.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="phosphor-container">
         <button id="back-btn">Back</button>
         <div class="iframe-container">
@@ -207,6 +227,28 @@
             document.getElementById('phosphor-container').style.display = 'none'; // Hide the overlay
             bgMusic.play(); // Resume the main page music
             document.body.style.overflow = 'auto'; // Restore page scroll
+        });
+
+        // Add the gun sound and fire effect functionality
+        const gunSound = document.getElementById('gun-sound');
+        const body = document.body;
+
+        // Listen for a click event on the body
+        body.addEventListener('click', function(event) {
+            // Play the gun sound
+            gunSound.play();
+
+            // Create a fire effect at the mouse position
+            const fireEffect = document.createElement('div');
+            fireEffect.classList.add('fire-effect');
+            fireEffect.style.left = `${event.clientX - 25}px`;
+            fireEffect.style.top = `${event.clientY - 25}px`;
+            document.body.appendChild(fireEffect);
+
+            // Remove the fire effect after animation
+            setTimeout(() => {
+                fireEffect.remove();
+            }, 200); // Remove after animation duration
         });
     </script>
 </body>
