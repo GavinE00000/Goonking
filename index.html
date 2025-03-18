@@ -74,6 +74,26 @@
             width: 400px;
         }
 
+        .image-container {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 20px;
+            position: relative;
+            top: -1100px; /* Adjusted to position the images directly below the menu */
+        }
+
+        .image-container img {
+            width: 230px;
+            height: 320px;
+            margin-top: 20px;
+        }
+
+        .coming-soon {
+            color: red;
+            font-size: 24px;
+            margin-top: 0px;
+        }
+
         #phosphor-container {
             display: none;
             position: fixed;
@@ -189,7 +209,7 @@
             <input type="submit" value="SIGN GUESTBOOK">
         </form>
     </div>
-    
+
     <p><strong>NOT FDA APPROVED. MAY CAUSE UNSTOPPABLE GOONING.</strong></p>
     <img src="https://web.archive.org/web/20030326075726/http://in.geocities.com:80/healthrevolution/mall/virilitypills4.gif" alt="Under Construction">
     <audio autoplay loop id="bg-music">
@@ -200,6 +220,18 @@
         <source src="https://media.memesoundeffects.com/2022/11/Pew-Sound-Sound-Effect.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- New Image Container and Play/Pause Button -->
+    <div class="image-container">
+        <!-- Image 1 is on the left, directly underneath the menu box -->
+        <img src="https://raw.githubusercontent.com/GavinE00000/Goonking/main/Goon%20pill.png" alt="Image 1">
+        
+        <!-- Image 2 is on the right, mirroring Image 1 -->
+        <div>
+            <h3 class="coming-soon">↓↓↓ COMING SOON! ↓↓↓</h3>
+            <img src="https://raw.githubusercontent.com/GavinE00000/Goonking/main/263fd2c6-dd19-492c-a80e-669aabad6a84-large3x4_Dumpster.png" alt="Image 2">
+        </div>
+    </div>
+
     <div id="phosphor-container">
         <button id="back-btn">Back</button>
         <div class="iframe-container">
@@ -208,48 +240,60 @@
     </div>
 
     <script>
-        const bgMusic = document.getElementById('bg-music');
-        const iframe = document.getElementById('scratch-iframe');
+    const bgMusic = document.getElementById('bg-music');
+    const iframe = document.getElementById('scratch-iframe');
+    const playPauseButton = document.getElementById('playPauseButton');
+    const newAudio = new Audio('https://raw.githubusercontent.com/GavinE00000/Goonking/main/The%20Goonfather%20Trailer.mp3'); // Replace with your MP3 path
+    let isPlaying = false; // Track audio state
 
-        // Simulate "autoplay" when link is clicked
-        document.getElementById('cookbook-link').addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent default link behavior
-            document.getElementById('phosphor-container').style.display = 'flex'; // Show the overlay
-            bgMusic.pause(); // Mute the main page music
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-            
-            // Set iframe source to ensure autoplay
-            iframe.src = "https://scratch.mit.edu/projects/1148127326/embed/?autostart=true";
+    // Simulate "autoplay" when link is clicked
+    document.getElementById('cookbook-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('phosphor-container').style.display = 'flex';
+        bgMusic.pause();
+        document.body.style.overflow = 'hidden';
+        iframe.src = "https://scratch.mit.edu/projects/1148127326/embed/?autostart=true";
+    });
+
+    // Hide overlay and resume music when "Back" is clicked
+    document.getElementById('back-btn').addEventListener('click', function() {
+        document.getElementById('phosphor-container').style.display = 'none';
+        bgMusic.play();
+        document.body.style.overflow = 'auto';
+    });
+
+    // Add the gun sound and fire effect functionality
+    const gunSound = document.getElementById('gun-sound');
+    const body = document.body;
+
+    body.addEventListener('click', function(event) {
+        gunSound.play();
+
+        const fireEffect = document.createElement('div');
+        fireEffect.classList.add('fire-effect');
+        fireEffect.style.left = `${event.pageX - 25}px`;
+        fireEffect.style.top = `${event.pageY - 25}px`;
+
+        body.appendChild(fireEffect);
+
+        setTimeout(() => {
+            fireEffect.remove();
+        }, 200);
+    });
+
+    // Toggle MP3 play/pause when image is clicked
+    const image = document.querySelector('.image-container img:nth-child(2)');
+    if (image) {
+        image.addEventListener('click', function() {
+            if (isPlaying) {
+                newAudio.pause();
+                newAudio.currentTime = 0;
+                bgMusic.play(); // Resume background music
+            } else {
+                newAudio.play();
+                bgMusic.pause(); // Pause background music
+            }
+            isPlaying = !isPlaying; // Toggle state
         });
-
-        // Hide overlay and resume music when "Back" is clicked
-        document.getElementById('back-btn').addEventListener('click', function() {
-            document.getElementById('phosphor-container').style.display = 'none'; // Hide the overlay
-            bgMusic.play(); // Resume the main page music
-            document.body.style.overflow = 'auto'; // Restore page scroll
-        });
-
-        // Add the gun sound and fire effect functionality
-        const gunSound = document.getElementById('gun-sound');
-        const body = document.body;
-
-        // Listen for a click event on the body
-        body.addEventListener('click', function(event) {
-            // Play the gun sound
-            gunSound.play();
-
-            // Create a fire effect at the mouse position
-            const fireEffect = document.createElement('div');
-            fireEffect.classList.add('fire-effect');
-            fireEffect.style.left = `${event.clientX - 25}px`;
-            fireEffect.style.top = `${event.clientY - 25}px`;
-            document.body.appendChild(fireEffect);
-
-            // Remove the fire effect after animation
-            setTimeout(() => {
-                fireEffect.remove();
-            }, 200); // Remove after animation duration
-        });
-    </script>
-</body>
-</html>
+    }
+</script>
