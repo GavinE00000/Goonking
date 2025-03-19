@@ -21,6 +21,16 @@
             border: 5px solid firebrick;
             text-transform: uppercase;
         }
+#volume-slider-container {
+    position: absolute;
+    top: 90px; /* Adjust this number to move it up or down */
+    right: 10px; /* Adjust this number to move it left or right */
+    z-index: 10;
+}
+
+#volume-slider {
+    width: 200px; /* Adjust the slider width if needed */
+}
 
         .blink {
             animation: blinker 0.5s infinite alternate;
@@ -76,7 +86,7 @@
 
         .image-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-evenly;
             margin-top: 20px;
             position: relative;
             top: -1100px; /* Adjusted to position the images directly below the menu */
@@ -163,7 +173,9 @@
     <marquee behavior="alternate" scrollamount="10">🔥🔥 WELCOME TO GOONKINGPILLS.COM 🔥🔥</marquee>
     
     <h1 class="pill">💊 GOON KING PILLS 💊</h1>
-    <img class="skull" src="https://media1.tenor.com/m/ZXcLRBGxrmsAAAAC/skelet-in-fire.gif" alt="Flaming Skull">
+    <video id="video" width="320" height="240" poster="static-image.jpg" onclick="toggleVideo()" loop>
+  <source src="https://github.com/GavinE00000/Goonking/raw/main/Website%20intro.mp4" type="video/mp4">
+</video>
     
     <p><strong>BUY NOW OR YOU WILL BE FLACCID FOREVER</strong></p>
     <p>🚨 <span class="blink">WARNING: MAXIMUM TESTOSTERONE OVERLOAD 🚨</span></p>
@@ -212,9 +224,11 @@
 
     <p><strong>NOT FDA APPROVED. MAY CAUSE UNSTOPPABLE GOONING.</strong></p>
     <img src="https://web.archive.org/web/20030326075726/http://in.geocities.com:80/healthrevolution/mall/virilitypills4.gif" alt="Under Construction">
-    <audio autoplay loop id="bg-music">
-        <source src="https://www.midis101.com/play-midi/90083-bad-to-the-bone.mp3" type="audio/mpeg">
-    </audio>
+    <div id="volume-slider-container">
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+</div>
+
+<audio autoplay loop id="bg-music"></audio>
     
     <audio id="gun-sound">
         <source src="https://media.memesoundeffects.com/2022/11/Pew-Sound-Sound-Effect.mp3" type="audio/mpeg">
@@ -296,4 +310,75 @@
             isPlaying = !isPlaying; // Toggle state
         });
     }
+var video = document.getElementById("video");
+  var backgroundMusic = document.getElementById("bg-music");
+
+  function toggleVideo() {
+    if (video.paused) {
+      video.play();
+      bgMusic.pause(); // Pause background music when video plays
+    } else {
+      video.pause();
+      bgMusic.play(); // Resume background music when video pauses
+    }
+  }
+// --- START OF NEW MUSIC FUNCTIONALITY ---
+    const musicTracks = [
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/I%20Will%20survive.mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Lets%20Dance.mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Eye-Of-The-Tiger-(From-Rocky).mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Warren%20G%20-%20Regulate.mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/BONEY%20M.Rasputin%20K.mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Thriller.mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Bon%20Jovi%20-%20Living%20on%20a%20Prayer.mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Bad-To-The-Bone.mp3",
+
+            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/system_of_a_down-chop_suey(1).mp3",
+        // ADD MORE MUSIC URLS HERE. Each URL must be enclosed in quotes "" and separated by commas ,
+    ];
+
+    function playRandomMusic() {
+        const randomIndex = Math.floor(Math.random() * musicTracks.length);
+        bgMusic.src = musicTracks[randomIndex]; // Sets the audio source to a random track
+        bgMusic.load(); // Loads the new audio source
+        bgMusic.play(); // Plays the new audio source
+    }
+
+    playRandomMusic(); // Plays a random track when the page loads
+    // --- END OF RANDOM MUSIC ON LOAD CODE ---
+
+    // --- START OF ARROW KEY MUSIC CHANGE CODE ---
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            let currentIndex = musicTracks.indexOf(bgMusic.src); // Gets the current track index
+            if (event.key === 'ArrowLeft') {
+                currentIndex = (currentIndex - 1 + musicTracks.length) % musicTracks.length; // Goes to the previous track
+            } else {
+                currentIndex = (currentIndex + 1) % musicTracks.length; // Goes to the next track
+            }
+            bgMusic.src = musicTracks[currentIndex]; // Sets the audio source to the next/previous track
+            bgMusic.load(); // Loads the new audio source
+            bgMusic.play(); // Plays the new audio source
+        }
+    });
+    // --- END OF ARROW KEY MUSIC CHANGE CODE ---
+// ... (Your existing JavaScript code) ...
+
+        // --- VOLUME SLIDER FUNCTIONALITY ---
+        const volumeSlider = document.getElementById('volume-slider');
+
+        volumeSlider.addEventListener('input', function() {
+            bgMusic.volume = volumeSlider.value;
+        });
+
+        // --- END OF VOLUME SLIDER FUNCTIONALITY ---
+
+        // ... (Your existing JavaScript code) ...
 </script>
