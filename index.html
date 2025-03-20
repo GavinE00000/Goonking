@@ -1,384 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOON KING PILLS - OFFICIAL SITE</title>
-    <style>
-        body {
-            background: black url('https://web.archive.org/web/20091019162556/http://www.geocities.com/montvillefire/flames3.gif') repeat;
-            color: #ff0;
-            font-family: Impact, "Comic Sans MS", Papyrus;
-            text-align: center;
-            cursor: url('https://cur.cursors-4u.net/others/oth-1/oth4.cur'), auto;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GOON KING PILLS - OFFICIAL SITE</title>
+	<style>
+    	body {
+        	background: black url('https://web.archive.org/web/20091019162556/http://www.geocities.com/montvillefire/flames3.gif') repeat;
+        	color: #ff0;
+        	font-family: Impact, "Comic Sans MS", Papyrus;
+        	text-align: center;
+        	cursor: url('https://cur.cursors-4u.net/others/oth-1/oth4.cur'), auto;
+    	}
 
-        marquee {
-            font-size: 50px;
-            color: red;
-            font-weight: bold;
-            background: black;
-            border: 5px solid firebrick;
-            text-transform: uppercase;
-        }
+    	marquee {
+        	font-size: 50px;
+        	color: red;
+        	font-weight: bold;
+        	background: black;
+        	border: 5px solid firebrick;
+        	text-transform: uppercase;
+    	}
 #volume-slider-container {
-    position: absolute;
-    top: 90px; /* Adjust this number to move it up or down */
-    right: 10px; /* Adjust this number to move it left or right */
-    z-index: 10;
+	position: absolute;
+	top: 90px; /* Adjust this number to move it up or down */
+	right: 10px; /* Adjust this number to move it left or right */
+	z-index: 10;
 }
 
 #volume-slider {
-    width: 200px; /* Adjust the slider width if needed */
+	width: 200px; /* Adjust the slider width if needed */
 }
 
-        .blink {
-            animation: blinker 0.5s infinite alternate;
-        }
+    	.blink {
+        	animation: blinker 0.5s infinite alternate;
+    	}
 
-        @keyframes blinker {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
+    	@keyframes blinker {
+        	from { opacity: 1; }
+        	to { opacity: 0; }
+    	}
 
-        .pill {
-            font-size: 70px;
-            color: orangered;
-            text-shadow: 10px 10px black;
-            transform: rotate(-10deg);
-        }
+    	.pill {
+        	font-size: 70px;
+        	color: orangered;
+        	text-shadow: 10px 10px black;
+        	transform: rotate(-10deg);
+    	}
 
-        .sidebar {
-            background: repeating-linear-gradient(45deg, crimson, darkred 10%, black 20%);
-            color: white;
-            padding: 20px;
-            width: 300px;
-            position: absolute;
-            left: 10px;
-            top: 180px;
-            border: 10px groove firebrick;
-            text-align: left;
-        }
+    	.sidebar {
+        	background: repeating-linear-gradient(45deg, crimson, darkred 10%, black 20%);
+        	color: white;
+        	padding: 20px;
+        	width: 300px;
+        	position: absolute;
+        	left: 10px;
+        	top: 180px;
+        	border: 10px groove firebrick;
+        	text-align: left;
+    	}
 
-        .counter {
-            font-size: 50px;
-            background: black;
-            color: red;
-            padding: 20px;
-            border: 10px dotted firebrick;
-            display: inline-block;
-            text-transform: uppercase;
-        }
+    	.counter {
+        	font-size: 50px;
+        	background: black;
+        	color: red;
+        	padding: 20px;
+        	border: 10px dotted firebrick;
+        	display: inline-block;
+        	text-transform: uppercase;
+    	}
 
-        .guestbook {
-            font-size: 25px;
-            background: darkred;
-            color: white;
-            padding: 30px;
-            margin: 40px;
-            border: 10px dashed orangered;
-            transform: skew(-15deg);
-        }
+    	.guestbook {
+        	font-size: 25px;
+        	background: darkred;
+        	color: white;
+        	padding: 30px;
+        	margin: 40px;
+        	border: 10px dashed orangered;
+        	transform: skew(-15deg);
+    	}
 
-        .skull {
-            width: 400px;
-        }
+    	.skull {
+        	width: 400px;
+    	}
 
-        .image-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-            position: relative;
-            top: -1100px; /* Adjusted to position the images directly below the menu */
-        }
+    	.image-container {
+        	display: flex;
+        	justify-content: space-around;
+        	margin-top: 20px;
+        	position: relative;
+        	top: -1100px; /* Adjusted to position the images directly below the menu */
+    	}
 
-        .image-container img {
-            width: 230px;
-            height: 320px;
-            margin-top: 20px;
-        }
+    	.image-container img {
+        	width: 230px;
+        	height: 320px;
+        	margin-top: 20px;
+    	}
 
-        .coming-soon {
-            color: red;
-            font-size: 24px;
-            margin-top: 0px;
-        }
+    	.coming-soon {
+        	color: red;
+        	font-size: 24px;
+        	margin-top: 0px;
+    	}
 
-        #phosphor-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+    	#phosphor-container {
+        	display: none;
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	width: 100%;
+        	height: 100%;
+        	background-color: rgba(0, 0, 0, 0.9);
+        	z-index: 1000;
+        	justify-content: center;
+        	align-items: center;
+        	text-align: center;
+    	}
 
-        #back-btn {
-            background: red;
-            color: white;
-            padding: 10px;
-            border: none;
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 20px;
-            cursor: pointer;
-        }
+    	#back-btn {
+        	background: red;
+        	color: white;
+        	padding: 10px;
+        	border: none;
+        	position: absolute;
+        	top: 20px;
+        	left: 20px;
+        	font-size: 20px;
+        	cursor: pointer;
+    	}
 
-        #back-btn:hover {
-            background: darkred;
-        }
+    	#back-btn:hover {
+        	background: darkred;
+    	}
 
-        iframe {
-            border: none;
-            border-radius: 10px;
-            box-shadow: none;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+    	iframe {
+        	border: none;
+        	border-radius: 10px;
+        	box-shadow: none;
+        	width: 100%;
+        	height: 100%;
+        	position: absolute;
+        	top: 0;
+        	left: 0;
+    	}
 
-        .iframe-container {
-            position: relative;
-            width: 640px;
-            height: 480px;
-            overflow: hidden;
-        }
+    	.iframe-container {
+        	position: relative;
+        	width: 640px;
+        	height: 480px;
+        	overflow: hidden;
+    	}
 
-        /* Add styles for firing effect */
-        .fire-effect {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle, red, yellow);
-            border-radius: 50%;
-            opacity: 1;
-            animation: fire 0.2s ease-out forwards;
-        }
+    	/* Add styles for firing effect */
+    	.fire-effect {
+        	position: absolute;
+        	width: 50px;
+        	height: 50px;
+        	background: radial-gradient(circle, red, yellow);
+        	border-radius: 50%;
+        	opacity: 1;
+        	animation: fire 0.2s ease-out forwards;
+    	}
 
-        @keyframes fire {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
-        }
-    </style>
+    	@keyframes fire {
+        	0% { transform: scale(1); opacity: 1; }
+        	100% { transform: scale(2); opacity: 0; }
+    	}
+	</style>
 </head>
 <body>
-    <marquee behavior="alternate" scrollamount="10">🔥🔥 WELCOME TO GOONKINGPILLS.COM 🔥🔥</marquee>
+	<marquee behavior="alternate" scrollamount="10">🔥🔥 WELCOME TO GOONKINGPILLS.COM 🔥🔥</marquee>
     
-    <h1 class="pill">💊 GOON KING PILLS 💊</h1>
-    <video id="video" width="320" height="240" poster="static-image.jpg" onclick="toggleVideo()" loop>
+	<h1 class="pill">💊 GOON KING PILLS 💊</h1>
+	<video id="video" width="320" height="240" poster="static-image.jpg" onclick="toggleVideo()" loop>
   <source src="https://github.com/GavinE00000/Goonking/raw/main/Website%20intro.mp4" type="video/mp4">
 </video>
     
-    <p><strong>BUY NOW OR YOU WILL BE FLACCID FOREVER</strong></p>
-    <p>🚨 <span class="blink">WARNING: MAXIMUM TESTOSTERONE OVERLOAD 🚨</span></p>
+	<p><strong>BUY NOW OR YOU WILL BE FLACCID FOREVER</strong></p>
+	<p>🚨 <span class="blink">WARNING: MAXIMUM TESTOSTERONE OVERLOAD 🚨</span></p>
     
-    <div class="sidebar">
-        <h3>🔥 MENU 🔥</h3>
-        <ul>
-            <li><a href="#" id="cookbook-link">💥NEW!💥 The Goonfather's Cookbook</a></li>
-            <li><a href="#">Buy Pills</a></li>
-            <li><a href="#">Testimonials</a></li>
-            <li><a href="#">Side Effects</a></li>
-            <li><a href="#">Goon Science</a></li>
-            <li><a href="#">EXTREME GOONING ZONE</a></li>
-        </ul>
-    </div>
+	<div class="sidebar">
+    	<h3>🔥 MENU 🔥</h3>
+    	<ul>
+        	<li><a href="#" id="cookbook-link">💥NEW!💥 The Goonfather's Cookbook</a></li>
+        	<li><a href="#">Buy Pills</a></li>
+        	<li><a href="#">Testimonials</a></li>
+        	<li><a href="#">Side Effects</a></li>
+        	<li><a href="#">Goon Science</a></li>
+        	<li><a href="#">EXTREME GOONING ZONE</a></li>
+    	</ul>
+	</div>
     
-    <h2>WHAT OUR USERS SAY:</h2>
-    <p>"I TOOK ONE GOON KING PILL AND GREW A BEARD INSTANTLY" - Brock Meathead</p>
-    <p>"THESE PILLS PUNCHED ME IN THE FACE. I THANKED THEM." - Tommy Tuffguy</p>
-    <p>"AFTER TAKING THIS, I BENCH PRESSED A CAR." - Johnny Powerlifter</p>
+	<h2>WHAT OUR USERS SAY:</h2>
+	<p>"I TOOK ONE GOON KING PILL AND GREW A BEARD INSTANTLY" - Brock Meathead</p>
+	<p>"THESE PILLS PUNCHED ME IN THE FACE. I THANKED THEM." - Tommy Tuffguy</p>
+	<p>"AFTER TAKING THIS, I BENCH PRESSED A CAR." - Johnny Powerlifter</p>
     
-    <h2>🔥 WARNING: "SIDE EFFECTS" INCLUDE 🔥</h2>
-    <ul>
-        <li>Instant Muscle Growth</li>
-        <li>Excessive Chest Hair</li>
-        <li>Uncontrollable ALPHA MALE Energy</li>
-        <li>Random EPIC Explosions</li>
-        <li>Permanent Goon Mode Activation</li>
-    </ul>
+	<h2>🔥 WARNING: "SIDE EFFECTS" INCLUDE 🔥</h2>
+	<ul>
+    	<li>Instant Muscle Growth</li>
+    	<li>Excessive Chest Hair</li>
+    	<li>Uncontrollable ALPHA MALE Energy</li>
+    	<li>Random EPIC Explosions</li>
+    	<li>Permanent Goon Mode Activation</li>
+	</ul>
     
-    <h2>VISITOR COUNTER:</h2>
-    <div class="counter">
-        <script>
-            document.write(Math.floor(Math.random() * 100000) + 1);
-        </script>
-    </div>
+	<h2>VISITOR COUNTER:</h2>
+	<div class="counter">
+    	<script>
+        	document.write(Math.floor(Math.random() * 100000) + 1);
+    	</script>
+	</div>
     
-    <h2>🔥 SIGN OUR GUESTBOOK 🔥</h2>
-    <div class="guestbook">
-        <form>
-            Name: <input type="text" name="name"><br>
-            Message: <textarea></textarea><br>
-            <input type="submit" value="SIGN GUESTBOOK">
-        </form>
-    </div>
+	<h2>🔥 SIGN OUR GUESTBOOK 🔥</h2>
+	<div class="guestbook">
+    	<form>
+        	Name: <input type="text" name="name"><br>
+        	Message: <textarea></textarea><br>
+        	<input type="submit" value="SIGN GUESTBOOK">
+    	</form>
+	</div>
 
-    <p><strong>NOT FDA APPROVED. MAY CAUSE UNSTOPPABLE GOONING.</strong></p>
-    <img src="https://web.archive.org/web/20030326075726/http://in.geocities.com:80/healthrevolution/mall/virilitypills4.gif" alt="Under Construction">
-    <div id="volume-slider-container">
-    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+	<p><strong>NOT FDA APPROVED. MAY CAUSE UNSTOPPABLE GOONING.</strong></p>
+	<img src="https://web.archive.org/web/20030326075726/http://in.geocities.com:80/healthrevolution/mall/virilitypills4.gif" alt="Under Construction">
+	<div id="volume-slider-container">
+	<input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
 </div>
 
 <audio autoplay loop id="bg-music"></audio>
     
-    <audio id="gun-sound">
-        <source src="https://media.memesoundeffects.com/2022/11/Pew-Sound-Sound-Effect.mp3" type="audio/mpeg">
-    </audio>
+	<audio id="gun-sound">
+    	<source src="https://media.memesoundeffects.com/2022/11/Pew-Sound-Sound-Effect.mp3" type="audio/mpeg">
+	</audio>
 
-    <!-- New Image Container and Play/Pause Button -->
-    <div class="image-container">
-        <!-- Image 1 is on the left, directly underneath the menu box -->
-        <img src="https://raw.githubusercontent.com/GavinE00000/Goonking/main/Goon%20pill.png" alt="Image 1">
-        
-        <!-- Image 2 is on the right, mirroring Image 1 -->
-        <div>
-            <h3 class="coming-soon">↓↓↓ COMING SOON! ↓↓↓</h3>
-            <img src="https://raw.githubusercontent.com/GavinE00000/Goonking/main/263fd2c6-dd19-492c-a80e-669aabad6a84-large3x4_Dumpster.png" alt="Image 2">
-        </div>
-    </div>
+	<!-- New Image Container and Play/Pause Button -->
+	<div class="image-container">
+    	<!-- Image 1 is on the left, directly underneath the menu box -->
+    	<img src="https://raw.githubusercontent.com/GavinE00000/Goonking/main/Goon%20pill.png" alt="Image 1">
+   	 
+    	<!-- Image 2 is on the right, mirroring Image 1 -->
+    	<div>
+        	<h3 class="coming-soon">↓↓↓ COMING SOON! ↓↓↓</h3>
+        	<img src="https://raw.githubusercontent.com/GavinE00000/Goonking/main/263fd2c6-dd19-492c-a80e-669aabad6a84-large3x4_Dumpster.png" alt="Image 2">
+    	</div>
+	</div>
 
-    <div id="phosphor-container">
-        <button id="back-btn">Back</button>
-        <div class="iframe-container">
-            <iframe id="scratch-iframe" src="https://scratch.mit.edu/projects/1148127326/embed/?autostart=true" width="640" height="480" allow="autoplay; fullscreen"></iframe>
-        </div>
-    </div>
+	<div id="phosphor-container">
+    	<button id="back-btn">Back</button>
+    	<div class="iframe-container">
+        	<iframe id="scratch-iframe" src="https://scratch.mit.edu/projects/1148127326/embed/?autostart=true" width="640" height="480" allow="autoplay; fullscreen"></iframe>
+    	</div>
+	</div>
 
-    <script>
-    const bgMusic = document.getElementById('bg-music');
-    const iframe = document.getElementById('scratch-iframe');
-    const playPauseButton = document.getElementById('playPauseButton');
-    const newAudio = new Audio('https://raw.githubusercontent.com/GavinE00000/Goonking/main/The%20Goonfather%20Trailer.mp3'); // Replace with your MP3 path
-    let isPlaying = false; // Track audio state
+	<script>
+	const bgMusic = document.getElementById('bg-music');
+	const iframe = document.getElementById('scratch-iframe');
+	const playPauseButton = document.getElementById('playPauseButton');
+	const newAudio = new Audio('https://raw.githubusercontent.com/GavinE00000/Goonking/main/The%20Goonfather%20Trailer.mp3'); // Replace with your MP3 path
+	let isPlaying = false; // Track audio state
 
-    // Simulate "autoplay" when link is clicked
-    document.getElementById('cookbook-link').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('phosphor-container').style.display = 'flex';
-        bgMusic.pause();
-        document.body.style.overflow = 'hidden';
-        iframe.src = "https://scratch.mit.edu/projects/1148127326/embed/?autostart=true";
-    });
+	// Simulate "autoplay" when link is clicked
+	document.getElementById('cookbook-link').addEventListener('click', function(e) {
+    	e.preventDefault();
+    	document.getElementById('phosphor-container').style.display = 'flex';
+    	bgMusic.pause();
+    	document.body.style.overflow = 'hidden';
+    	iframe.src = "https://scratch.mit.edu/projects/1148127326/embed/?autostart=true";
+	});
 
-    // Hide overlay and resume music when "Back" is clicked
-    document.getElementById('back-btn').addEventListener('click', function() {
-        document.getElementById('phosphor-container').style.display = 'none';
-        bgMusic.play();
-        document.body.style.overflow = 'auto';
-    });
+	// Hide overlay and resume music when "Back" is clicked
+	document.getElementById('back-btn').addEventListener('click', function() {
+    	document.getElementById('phosphor-container').style.display = 'none';
+    	bgMusic.play();
+    	document.body.style.overflow = 'auto';
+	});
 
-    // Add the gun sound and fire effect functionality
-    const gunSound = document.getElementById('gun-sound');
-    const body = document.body;
+	// Add the gun sound and fire effect functionality
+	const gunSound = document.getElementById('gun-sound');
+	const body = document.body;
 
-    body.addEventListener('click', function(event) {
-        gunSound.play();
+	body.addEventListener('click', function(event) {
+    	gunSound.play();
 
-        const fireEffect = document.createElement('div');
-        fireEffect.classList.add('fire-effect');
-        fireEffect.style.left = `${event.pageX - 25}px`;
-        fireEffect.style.top = `${event.pageY - 25}px`;
+    	const fireEffect = document.createElement('div');
+    	fireEffect.classList.add('fire-effect');
+    	fireEffect.style.left = `${event.pageX - 25}px`;
+    	fireEffect.style.top = `${event.pageY - 25}px`;
 
-        body.appendChild(fireEffect);
+    	body.appendChild(fireEffect);
 
-        setTimeout(() => {
-            fireEffect.remove();
-        }, 200);
-    });
+    	setTimeout(() => {
+        	fireEffect.remove();
+    	}, 200);
+	});
 
-    // Toggle MP3 play/pause when image is clicked
-    const image = document.querySelector('.image-container img:nth-child(2)');
-    if (image) {
-        image.addEventListener('click', function() {
-            if (isPlaying) {
-                newAudio.pause();
-                newAudio.currentTime = 0;
-                bgMusic.play(); // Resume background music
-            } else {
-                newAudio.play();
-                bgMusic.pause(); // Pause background music
-            }
-            isPlaying = !isPlaying; // Toggle state
-        });
-    }
+	// Toggle MP3 play/pause when image is clicked
+	const image = document.querySelector('.image-container img:nth-child(2)');
+	if (image) {
+    	image.addEventListener('click', function() {
+        	if (isPlaying) {
+            	newAudio.pause();
+            	newAudio.currentTime = 0;
+            	bgMusic.play(); // Resume background music
+        	} else {
+            	newAudio.play();
+            	bgMusic.pause(); // Pause background music
+        	}
+        	isPlaying = !isPlaying; // Toggle state
+    	});
+	}
 var video = document.getElementById("video");
   var backgroundMusic = document.getElementById("bg-music");
 
   function toggleVideo() {
-    if (video.paused) {
-      video.play();
-      bgMusic.pause(); // Pause background music when video plays
-    } else {
-      video.pause();
-      bgMusic.play(); // Resume background music when video pauses
-    }
+	if (video.paused) {
+  	video.play();
+  	bgMusic.pause(); // Pause background music when video plays
+	} else {
+  	video.pause();
+  	bgMusic.play(); // Resume background music when video pauses
+	}
   }
 // --- START OF NEW MUSIC FUNCTIONALITY ---
-    const musicTracks = [
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/I%20Will%20survive.mp3",
+	const musicTracks = [
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/I%20Will%20survive.mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Lets%20Dance.mp3",
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Lets%20Dance.mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Eye-Of-The-Tiger-(From-Rocky).mp3",
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Eye-Of-The-Tiger-(From-Rocky).mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Warren%20G%20-%20Regulate.mp3",
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Warren%20G%20-%20Regulate.mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/BONEY%20M.Rasputin%20K.mp3",
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/BONEY%20M.Rasputin%20K.mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Thriller.mp3",
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Thriller.mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Bon%20Jovi%20-%20Living%20on%20a%20Prayer.mp3",
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Bon%20Jovi%20-%20Living%20on%20a%20Prayer.mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/Bad-To-The-Bone.mp3",
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Bad-To-The-Bone.mp3",
 
-            "https://raw.githubusercontent.com/GavinE00000/Goonking/main/system_of_a_down-chop_suey(1).mp3",
-        // ADD MORE MUSIC URLS HERE. Each URL must be enclosed in quotes "" and separated by commas ,
-    ];
+        	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/system_of_a_down-chop_suey(1).mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/A%20HA.Take%20on%20me%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/AFROMAN.Because%20i%20got%20high%20k.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Everybody-Wants-To-Rule-The-World-2.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/SHAGGY.I%20wasnt%20me%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/STEELY%20DAN.Peg%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Softcell%20-%20Tainted%20Love%20L.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/THE%20LIPPS.Funkytown%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/system_of_a_down-chop_suey(1).mp3",
+"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Brandy-(Youre-Are-A-Fine-Girl).mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Break-My-Stride.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Dancing-In-The-Moonlight.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/FALCO.Rock%20me%20amadeus.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Get-Outta-My-Dreams-Get-Into-My-Car-1.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/MARLEY.Jamming%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Paula%20Abdul%20-%20Straight%20Up%20L.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Surfin-USA-3.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/The%20Vapors%20-%20Turning%20Japanese.mp3",
+ "https://raw.githubusercontent.com/GavinE00000/Goonking/main/ALLMAN%20BR.Ramblin%20man.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Bob%20Seger%20-%20Hollywood%20Nights.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/C.DOUGLAS.Kung%20fu%20fighting%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Doobie%20Brothers%20-%20What%20A%20Fool%20Believes.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Peter%20Gabriel%20-%20Sledgehammer%20L.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/THE%20ROMANTICS.Talking%20in%20your%20sleep%20k.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Talking%20Heads%20-%20Once%20in%20a%20Lifetime.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Red-Red-Wine-3.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/THE%20PLATTERS.Under%20the%20boardwalk%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/TOTO.Africa%20K.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/The%20Police%20-%20Message%20in%20a%20Bottle.mp3",
+"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Billy%20Joel%20-%20You%20May%20Be%20Right.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Gary-Numan.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/Prince%20-%20Raspberry%20Beret.mp3",
+	"https://raw.githubusercontent.com/GavinE00000/Goonking/main/VAN%20HALEN.Right%20now.mp3"
+	];
 
-    function playRandomMusic() {
-        const randomIndex = Math.floor(Math.random() * musicTracks.length);
-        bgMusic.src = musicTracks[randomIndex]; // Sets the audio source to a random track
-        bgMusic.load(); // Loads the new audio source
-        bgMusic.play(); // Plays the new audio source
-    }
+	function playRandomMusic() {
+    	const randomIndex = Math.floor(Math.random() * musicTracks.length);
+    	bgMusic.src = musicTracks[randomIndex]; // Sets the audio source to a random track
+    	bgMusic.load(); // Loads the new audio source
+    	bgMusic.play(); // Plays the new audio source
+	}
 
-    playRandomMusic(); // Plays a random track when the page loads
-    // --- END OF RANDOM MUSIC ON LOAD CODE ---
+	playRandomMusic(); // Plays a random track when the page loads
+	// --- END OF RANDOM MUSIC ON LOAD CODE ---
 
-    // --- START OF ARROW KEY MUSIC CHANGE CODE ---
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            let currentIndex = musicTracks.indexOf(bgMusic.src); // Gets the current track index
-            if (event.key === 'ArrowLeft') {
-                currentIndex = (currentIndex - 1 + musicTracks.length) % musicTracks.length; // Goes to the previous track
-            } else {
-                currentIndex = (currentIndex + 1) % musicTracks.length; // Goes to the next track
-            }
-            bgMusic.src = musicTracks[currentIndex]; // Sets the audio source to the next/previous track
-            bgMusic.load(); // Loads the new audio source
-            bgMusic.play(); // Plays the new audio source
-        }
-    });
-    // --- END OF ARROW KEY MUSIC CHANGE CODE ---
+	// --- START OF ARROW KEY MUSIC CHANGE CODE ---
+	document.addEventListener('keydown', function(event) {
+    	if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        	let currentIndex = musicTracks.indexOf(bgMusic.src); // Gets the current track index
+        	if (event.key === 'ArrowLeft') {
+            	currentIndex = (currentIndex - 1 + musicTracks.length) % musicTracks.length; // Goes to the previous track
+        	} else {
+            	currentIndex = (currentIndex + 1) % musicTracks.length; // Goes to the next track
+        	}
+        	bgMusic.src = musicTracks[currentIndex]; // Sets the audio source to the next/previous track
+        	bgMusic.load(); // Loads the new audio source
+        	bgMusic.play(); // Plays the new audio source
+    	}
+	});
+	// --- END OF ARROW KEY MUSIC CHANGE CODE ---
 // ... (Your existing JavaScript code) ...
 
-        // --- VOLUME SLIDER FUNCTIONALITY ---
-        const volumeSlider = document.getElementById('volume-slider');
+    	// --- VOLUME SLIDER FUNCTIONALITY ---
+    	const volumeSlider = document.getElementById('volume-slider');
 
-        volumeSlider.addEventListener('input', function() {
-            bgMusic.volume = volumeSlider.value;
-        });
+    	volumeSlider.addEventListener('input', function() {
+        	bgMusic.volume = volumeSlider.value;
+    	});
 
-        // --- END OF VOLUME SLIDER FUNCTIONALITY ---
+    	// --- END OF VOLUME SLIDER FUNCTIONALITY ---
 
-        // ... (Your existing JavaScript code) ...
+    	// ... (Your existing JavaScript code) ...
 </script>
