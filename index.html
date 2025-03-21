@@ -244,7 +244,7 @@
 </div>
 </div>
 
-<audio autoplay id="bg-music"></audio>
+<audio id="bg-music"></audio>
     
 	<audio id="gun-sound">
 	<source src="https://media.memesoundeffects.com/2022/11/Pew-Sound-Sound-Effect.mp3" type="audio/mpeg">
@@ -342,24 +342,18 @@ let isPlaying = false;
 const newAudio = new Audio('https://raw.githubusercontent.com/GavinE00000/Goonking/main/The%20Goonfather%20Trailer.mp3');
 // Define playRandomMusic() ONCE, OUTSIDE the event listener
 function playRandomMusic() {
-	const randomIndex = Math.floor(Math.random() * musicTracks.length);
-	bgMusic.src = musicTracks[randomIndex];
-	bgMusic.load();
-	bgMusic.play();
+    const randomIndex = Math.floor(Math.random() * musicTracks.length);
+    bgMusic.src = musicTracks[randomIndex];
+    bgMusic.load();
+    bgMusic.play();
 }
 
-// Add event listener to the button and call playRandomMusic()
 document.getElementById('play-music-btn').addEventListener('click', function() {
-	playRandomMusic(); // Call the function here
+    playRandomMusic();
 });
 
-// Add event listener for when the track ends
 bgMusic.addEventListener('ended', function() {
-	let currentIndex = musicTracks.indexOf(bgMusic.src);
-	currentIndex = (currentIndex + 1) % musicTracks.length;
-	bgMusic.src = musicTracks[currentIndex];
-	bgMusic.load();
-	bgMusic.play();
+    playRandomMusic(); // Call playRandomMusic() again to get a new random track
 });
 
 	// Simulate "autoplay" when link is clicked
