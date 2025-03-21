@@ -67,7 +67,7 @@ let jumpSound;
 let startSound;
 
 window.onload = function() {
-    board = document.getElementById("board");
+    board = document.getElementById("flappy-board"); // Correct canvas ID
     board.height = boardHeight;
     board.width = boardWidth;
     context = board.getContext("2d");
