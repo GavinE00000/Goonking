@@ -267,34 +267,42 @@
     <canvas id="flappy-board"></canvas>
 </div>
 <script>
-    flappyLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        flappyOverlay.style.display = 'flex';
-        bgMusic.pause();
-        document.body.style.overflow = 'hidden';
+const flappyLink = document.getElementById('flappy-link');
+const flappyOverlay = document.getElementById('flappy-overlay');
+const flappyBackBtn = document.getElementById('flappy-back-btn');
+let bgMusic = document.getElementById('bg-music');
+const body = document.body;
+let flappyGameInstance = null;
+let flappyScriptLoaded = false;
 
-        // Dynamically load the flappybird.js script
+flappyLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    flappyOverlay.style.display = 'flex';
+    bgMusic.pause();
+    body.style.overflow = 'hidden';
+
+    // Dynamically load the flappybird.js script
+    if (!flappyScriptLoaded) {
         const script = document.createElement('script');
         script.src = 'flappybird.js';
         document.body.appendChild(script);
 
-        // Add an event listener to run code once the script has loaded.
-        script.onload = function(){
-            //initialize the flappy bird game here.
-        }
-    });
+        script.onload = function() {
+            flappyScriptLoaded = true;
+            // Get the canvas element here
+            const canvas = document.getElementById('flappy-board');
+            // Call startFlappyGame and pass the canvas
+            flappyGameInstance = startFlappyGame(canvas);
+        };
 
-    flappyBackBtn.addEventListener('click', function() {
-        flappyOverlay.style.display = 'none';
-        bgMusic.play();
-        document.body.style.overflow = 'auto';
-
-        //Remove the script when the game is closed.
-        const script = document.querySelector('script[src="flappybird.js"]');
-        if (script) {
-            script.remove();
-        }
-    });
+        script.onerror = function() {
+            // error handling
+        };
+    } else {
+        const canvas = document.getElementById('flappy-board');
+        flappyGameInstance = startFlappyGame(canvas);
+    }
+});
 </script>
 
 <script>
