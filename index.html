@@ -300,12 +300,12 @@
     <canvas id="flappy-board"></canvas>
 </div>
 <script>
+let flappyGameInstance = null;
+let flappyScriptLoaded = false;
 const flappyLink = document.getElementById('flappy-link');
 const flappyOverlay = document.getElementById('flappy-overlay');
 const flappyBackBtn = document.getElementById('flappy-back-btn');
 const body = document.body;
-let flappyGameInstance = null;
-let flappyScriptLoaded = false;
 
     const bgMusic = document.getElementById('bg-music');
     const musicTracks = [
