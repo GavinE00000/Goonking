@@ -307,49 +307,6 @@ const body = document.body;
 let flappyGameInstance = null;
 let flappyScriptLoaded = false;
 
-flappyLink.addEventListener('click', function(e) {
-    e.preventDefault();
-    flappyOverlay.style.display = 'flex';
-    bgMusic.pause();
-    body.style.overflow = 'hidden';
-
-    // Dynamically load the flappybird.js script
-    if (!flappyScriptLoaded) {
-        const script = document.createElement('script');
-        script.src = 'flappybird.js';
-        document.body.appendChild(script);
-
-        script.onload = function() {
-            flappyScriptLoaded = true;
-            // Get the canvas element here
-            const canvas = document.getElementById('flappy-board');
-            // Call startFlappyGame and pass the canvas
-            flappyGameInstance = startFlappyGame(canvas);
-        };
-
-        script.onerror = function() {
-            // error handling
-        };
-    } else {
-        const canvas = document.getElementById('flappy-board');
-        flappyGameInstance = startFlappyGame(canvas);
-    }
-});
-
-flappyBackBtn.addEventListener('click', function() {
-    flappyOverlay.style.display = 'none';
-    bgMusic.play();
-    body.style.overflow = 'auto';
-    if (flappyGameInstance) {
-      //  cancelAnimationFrame(flappyGameInstance); // Stop the animation loop
-        flappyGameInstance = null; // Reset the instance
-    }
-});
-
-
-</script>
-
-<script>
     const bgMusic = document.getElementById('bg-music');
     const musicTracks = [
             "https://raw.githubusercontent.com/GavinE00000/Goonking/main/I%20Will%20survive.mp3",
@@ -498,6 +455,44 @@ var video = document.getElementById("video");
         volumeSlider.addEventListener('input', function() {
             bgMusic.volume = volumeSlider.value;
         });
+flappyLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    flappyOverlay.style.display = 'flex';
+    bgMusic.pause();
+    body.style.overflow = 'hidden';
+
+    // Dynamically load the flappybird.js script
+    if (!flappyScriptLoaded) {
+        const script = document.createElement('script');
+        script.src = 'flappybird.js';
+        document.body.appendChild(script);
+
+        script.onload = function() {
+            flappyScriptLoaded = true;
+            // Get the canvas element here
+            const canvas = document.getElementById('flappy-board');
+            // Call startFlappyGame and pass the canvas
+            flappyGameInstance = startFlappyGame(canvas);
+        };
+
+        script.onerror = function() {
+            // error handling
+        };
+    } else {
+        const canvas = document.getElementById('flappy-board');
+        flappyGameInstance = startFlappyGame(canvas);
+    }
+});
+
+flappyBackBtn.addEventListener('click', function() {
+    flappyOverlay.style.display = 'none';
+    bgMusic.play();
+    body.style.overflow = 'auto';
+    if (flappyGameInstance) {
+      //  cancelAnimationFrame(flappyGameInstance); // Stop the animation loop
+        flappyGameInstance = null; // Reset the instance
+    }
+});
 
 </script>
 </body>
