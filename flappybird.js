@@ -91,6 +91,7 @@ function startFlappyGame(canvas) {
     birdImg.src = "./flappybird.png";
     birdImg.onload = function() {
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+birdImg.onerror = () => console.log("Bird image failed to load!");
     }
 
     topPipeImg = new Image();
