@@ -72,6 +72,12 @@ window.onload = function() {
     board.width = boardWidth;
     context = board.getContext("2d");
 
+function startFlappyGame(canvas) {
+    board = canvas;
+    context = canvas.getContext("2d");
+    // ... the rest of your game initialization code ...
+}
+
     // Load sound effects
     hitSound = new Audio("./hit.mp3");
     dieSound = new Audio("./die.mp3");
