@@ -46,146 +46,141 @@ const gameState = {
     birdImg: null,
     topPipeImg: null,
     bottomPipeImg: null,
-    hitSound: null,
-    dieSound: null,
-    pointSound: null,
+    gameStart: false, // Add this line
+    startSound: null,
     jumpSound: null,
-    startSound: null
+    hitSound: null,
+    flapSound: null
 };
 
-window.addEventListener('resize', () => {
-    screenWidth = window.innerWidth;
-    screenHeight = window.innerHeight;
-
-    if (screenWidth / screenHeight > targetAspectRatio) {
-        boardHeight = screenHeight;
-        boardWidth = boardHeight * targetAspectRatio;
-    } else {
-        boardWidth = screenWidth;
-        boardHeight = boardWidth / targetAspectRatio;
-    }
-
-    const scale = boardWidth / baseWidth;
-    gameState.board.height = boardHeight;
-    gameState.board.width = boardWidth;
-
-    gameState.bird.width = 40 * scale;
-    gameState.bird.height = 57 * scale;
-    gameState.bird.x = boardWidth / 8;
-    gameState.bird.y = boardHeight / 2;
-
-    gameState.pipeWidth = 80 * scale;
-    gameState.pipeHeight = 512 * scale;
-    gameState.velocityX = -2 * scale;
-    gameState.gravity = 0.4 * scale;
-    gameState.scaledJumpStrength = -6 * scale;
-});
-
-window.onload = function() {
-    // Initialize the canvas and context
+// Function to initialize and scale the canvas
+function initializeCanvas() {
     gameState.board = document.getElementById("flappy-board");
+    if (!gameState.board) {
+        console.error("Canvas element not found!");
+        return;
+    }
     gameState.board.height = boardHeight;
     gameState.board.width = boardWidth;
     gameState.context = gameState.board.getContext("2d");
+}
 
-    // Load images
-    gameState.birdImg = new Image();
-    gameState.topPipeImg = new Image();
-    gameState.bottomPipeImg = new Image();
 
-    gameState.birdImg.onload = () => {
-        console.log("Bird image loaded");
+function loadAssets(callback) {
+    let assetsLoaded = 0;
+    const totalAssets = 5; // Total number of assets to load
+
+    const onAssetLoad = () => {
+        assetsLoaded++;
+        if (assetsLoaded === totalAssets) {
+            callback(); // Call the callback function when all assets are loaded
+        }
     };
 
-    gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png"; // Corrected URL
-    gameState.topPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";     // Corrected URL
-    gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";  // Corrected URL
+    gameState.birdImg = new Image();
+    gameState.birdImg.onload = onAssetLoad;
+    gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png";
 
-    startGame(); // Start the game.
-};
+    gameState.topPipeImg = new Image();
+    gameState.topPipeImg.onload = onAssetLoad;
+    gameState.topPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";
 
+    gameState.bottomPipeImg = new Image();
+    gameState.bottomPipeImg.onload = onAssetLoad;
+    gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";
+
+      // Load sounds
+    gameState.startSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
+    gameState.startSound.onload = onAssetLoad;
+
+    gameState.jumpSound = new Audio("https://www.soundjay.com/buttons/sounds/jump-01.mp3");
+    gameState.jumpSound.onload = onAssetLoad;
+
+
+}
 
 function startGame() {
-    console.log("startGame() is being called");
-    // Load sound effects only when game starts (after user interaction)
-    gameState.hitSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/hit.mp3");
-    gameState.dieSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/die.mp3");
-    gameState.pointSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/point.mp3");
-    gameState.jumpSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/jump.mp3");
-    gameState.startSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/start.mp3");
+    if (!gameState.gameStart) {
+        return;
+    }
+    // Clear the canvas
+    gameState.context.clearRect(0, 0, gameState.board.width, gameState.board.height);
 
-    gameState.startSound.play(); // Play start sound when game starts
-
-    requestAnimationFrame(update);
-    setInterval(placePipes, 1500);
-    document.addEventListener("keydown", moveBird);
-
-    function update() { // Added missing curly brace here.
-        if (gameState.gameOver) {
-            return;
-        }
-
-        requestAnimationFrame(update);
-        gameState.context.clearRect(0, 0, boardWidth, boardHeight);
-
-    // Bird
-    gameState.velocityY += gameState.gravity;
-    gameState.bird.y = Math.max(gameState.bird.y + gameState.velocityY, 0);
+    // Draw the bird
     gameState.context.drawImage(gameState.birdImg, gameState.bird.x, gameState.bird.y, gameState.bird.width, gameState.bird.height);
 
-    if (gameState.bird.y > gameState.board.height) {
-        gameState.gameOver = true;
-        gameState.dieSound.play(); // Play die sound once
+    // Generate and draw pipes
+    if (gameState.pipeArray.length === 0 || gameState.pipeArray[gameState.pipeArray.length - 2].x < gameState.board.width - 300 * scale) {
+        generatePipes();
     }
 
-    // Pipes
     for (let i = 0; i < gameState.pipeArray.length; i++) {
         let pipe = gameState.pipeArray[i];
         pipe.x += gameState.velocityX;
         gameState.context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
 
-        if (!pipe.passed && gameState.bird.x > pipe.x + pipe.width) {
-            gameState.score += 1;
-            pipe.passed = true;
-            gameState.pointSound.play(); // Play point sound once
-        }
-
-        if (detectCollision(gameState.bird, pipe)) {
-            if (!gameState.gameOver) {
-                gameState.hitSound.play(); // Play hit sound once
-            }
-            gameState.gameOver = true;
+        if (pipe.x + gameState.pipeWidth < 0) {
+            gameState.pipeArray.splice(i, 2);
+            i--;
         }
     }
 
-    // Clear pipes
-    while (gameState.pipeArray.length > 0 && gameState.pipeArray[0].x < -gameState.pipeWidth) {
-        gameState.pipeArray.shift();
-    }
+    // Bird movement
+    gameState.velocityY += gameState.gravity;
+    gameState.bird.y += gameState.velocityY;
 
-    // Score
-    gameState.context.fillStyle = "white";
-    gameState.context.font = "45px sans-serif";
-    gameState.context.fillText(gameState.score, 5, 45);
-
-    if (gameState.gameOver) {
-        gameState.context.fillText("GAME OVER", 5, 90);
-    }
-}
-}
-
-function placePipes() {
-    if (gameState.gameOver) {
+    // Game over conditions
+    if (gameState.bird.y + gameState.bird.height > gameState.board.height || gameState.bird.y < 0) {
+        endGame();
         return;
     }
 
-    let randomPipeY = gameState.pipeY - gameState.pipeHeight / 4 - Math.random() * (gameState.pipeHeight / 2);
-    let openingSpace = gameState.board.height / 3.5; // Adjusted to make openings wider
+      // Pipe collision detection
+    for (let i = 0; i < gameState.pipeArray.length; i++) {
+        let pipe = gameState.pipeArray[i];
+        if (
+            gameState.bird.x < pipe.x + pipe.width &&
+            gameState.bird.x + gameState.bird.width > pipe.x &&
+            gameState.bird.y < pipe.y + pipe.height &&
+            gameState.bird.y + gameState.bird.height > pipe.y
+        ) {
+            endGame();
+            return;
+        }
+    }
+
+    // Score calculation
+    for (let i = 0; i < gameState.pipeArray.length; i += 2) {
+        let topPipe = gameState.pipeArray[i];
+        if (gameState.bird.x > topPipe.x + gameState.pipeWidth && !topPipe.passed) {
+            gameState.score++;
+            topPipe.passed = true; // Ensure score is only added once per pipe pair
+        }
+    }
+
+    // Draw score
+    gameState.context.fillStyle = "white";
+    gameState.context.font = "40px Impact";
+    gameState.context.shadowColor = "black";
+    gameState.context.shadowOffsetX = 2;
+    gameState.context.shadowOffsetY = 2;
+    gameState.context.fillText("Score: " + gameState.score, gameState.board.width / 2 - 100, 50);
+    gameState.context.shadowOffsetX = 0;
+    gameState.context.shadowOffsetY = 0;
+
+    requestAnimationFrame(startGame);
+}
+
+function generatePipes() {
+    let openingSpace = gameState.board.height / 4;
+    let minPipeHeight = 100 * scale;
+    let maxPipeHeight = gameState.board.height - openingSpace - minPipeHeight;
+    let randomPipeY = Math.max(minPipeHeight, Math.random() * maxPipeHeight);
 
     let topPipe = {
         img: gameState.topPipeImg,
         x: gameState.pipeX,
-        y: randomPipeY,
+        y: randomPipeY - gameState.pipeHeight,
         width: gameState.pipeWidth,
         height: gameState.pipeHeight,
         passed: false
@@ -195,7 +190,7 @@ function placePipes() {
     let bottomPipe = {
         img: gameState.bottomPipeImg,
         x: gameState.pipeX,
-        y: randomPipeY + gameState.pipeHeight + openingSpace,
+        y: randomPipeY + openingSpace,
         width: gameState.pipeWidth,
         height: gameState.pipeHeight,
         passed: false
@@ -203,25 +198,63 @@ function placePipes() {
     gameState.pipeArray.push(bottomPipe);
 }
 
-function moveBird(e) {
-    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
-        gameState.velocityY = gameState.scaledJumpStrength;
-        gameState.jumpSound.play(); // Play jump sound every time
-
-        // Reset game
-        if (gameState.gameOver) {
-            gameState.bird.y = gameState.bird.y;
-            gameState.pipeArray = [];
+function handleKeyDown(e) {
+    if (e.code === "Space" || e.code === "ArrowUp" || e.code === "KeyX") {
+        e.preventDefault(); // prevent scrolling
+        if (!gameState.gameStart) {
+            gameState.gameStart = true;
             gameState.score = 0;
-            gameState.gameOver = false;
-            gameState.startSound.play();
+            gameState.pipeArray = [];
+            gameState.bird.y = boardHeight / 2;
+            startGame();
         }
+        gameState.velocityY = gameState.scaledJumpStrength;
+        gameState.jumpSound.play();
     }
 }
 
-function detectCollision(a, b) {
-    return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
-           a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
-           a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
-           a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+
+function endGame() {
+    gameState.gameOver = true;
+    gameState.gameStart = false;
+    gameState.context.fillStyle = "red";
+    gameState.context.font = "60px Impact";
+    gameState.context.textAlign = "center";
+    gameState.context.fillText("Game Over", gameState.board.width / 2, gameState.board.height / 2);
+
+     gameState.context.fillStyle = "white";
+    gameState.context.font = "20px Impact";
+    gameState.context.fillText("Press Space to Restart", gameState.board.width / 2, gameState.board.height / 2 + 40);
+
 }
+
+
+
+// --- Initialization ---
+window.onload = () => {
+    initializeCanvas();
+    loadAssets(() => {
+        // All assets loaded, but don't start game until spacebar
+       //  startGame(); // Start the game.
+       gameState.context.fillStyle = "white";
+        gameState.context.font = "40px Impact";
+        gameState.context.textAlign = "center";
+        gameState.context.fillText("Press Space to Start", gameState.board.width / 2, gameState.board.height / 2);
+    });
+
+
+    document.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', () => {
+        screenWidth = window.innerWidth;
+        screenHeight = window.innerHeight;
+        if (screenWidth / screenHeight > targetAspectRatio) {
+            boardHeight = screenHeight;
+            boardWidth = boardHeight * targetAspectRatio;
+        } else {
+            boardWidth = screenWidth;
+            boardHeight = boardWidth / targetAspectRatio;
+        }
+        initializeCanvas();
+       //  startGame(); // Restart the game to adjust to new dimensions - removed to start on spacebar
+    });
+};
