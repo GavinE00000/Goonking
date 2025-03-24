@@ -54,29 +54,24 @@ const gameState = {
 };
 
 window.onload = function() {
-    gameState.board = document.getElementById("flappy-board"); // Correct canvas ID
+    // Initialize the canvas and context
+    gameState.board = document.getElementById("flappy-board");
     gameState.board.height = boardHeight;
     gameState.board.width = boardWidth;
     gameState.context = gameState.board.getContext("2d");
 
-    // Load images (on page load)
-    loadImages();
-};
-
-function loadImages() {
+    // Load images
     gameState.birdImg = new Image();
-    gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png";
-    gameState.birdImg.onload = function() {
+    gameState.topPipeImg = new Image();
+    gameState.bottomPipeImg = new Image();
+
+    gameState.birdImg.onload = () => {
         console.log("Bird image loaded");
     };
-    gameState.birdImg.onerror = () => console.log("Bird image failed to load!");
 
-    gameState.topPipeImg = new Image();
-    gameState.topPipeImg.src = ".https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";
-
-    gameState.bottomPipeImg = new Image();
-    gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";
-}
+    gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png"; // Corrected URL
+    gameState.topPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";     // Corrected URL
+    gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";  // Corrected URL
 
 function startGame() {
     console.log("startGame() is being called");
@@ -93,29 +88,33 @@ function startGame() {
     setInterval(placePipes, 1500);
     document.addEventListener("keydown", moveBird);
 
-    window.addEventListener('resize', () => {
-        screenWidth = window.innerWidth;
-        screenHeight = window.innerHeight;
-        // Adjust board dimensions to maintain aspect ratio
-        if (screenWidth / screenHeight > targetAspectRatio) {
-            boardHeight = screenHeight;
-            boardWidth = boardHeight * targetAspectRatio;
-        } else {
-            boardWidth = screenWidth;
-            boardHeight = boardWidth / targetAspectRatio;
-        }
+window.addEventListener('resize', () => {
+    screenWidth = window.innerWidth;
+    screenHeight = window.innerHeight;
 
-        const scale = boardWidth / baseWidth;
-        gameState.board.height = boardHeight;
-        gameState.board.width = boardWidth;
+    if (screenWidth / screenHeight > targetAspectRatio) {
+        boardHeight = screenHeight;
+        boardWidth = boardHeight * targetAspectRatio;
+    } else {
+        boardWidth = screenWidth;
+        boardHeight = boardWidth / targetAspectRatio;
+    }
 
-        // Update bird dimensions as well based on the new scale
-        gameState.bird.width = 40 * scale;
-        gameState.bird.height = 57 * scale;
-        gameState.bird.x = boardWidth / 8;
-        gameState.bird.y = boardHeight / 2;
-    });
-}
+    const scale = boardWidth / baseWidth;
+    gameState.board.height = boardHeight;
+    gameState.board.width = boardWidth;
+
+    gameState.bird.width = 40 * scale;
+    gameState.bird.height = 57 * scale;
+    gameState.bird.x = boardWidth / 8;
+    gameState.bird.y = boardHeight / 2;
+
+    gameState.pipeWidth = 80 * scale;
+    gameState.pipeHeight = 512 * scale;
+    gameState.velocityX = -2 * scale;
+    gameState.gravity = 0.4 * scale;
+    gameState.scaledJumpStrength = -6 * scale;
+});
 
 function update() {
     if (gameState.gameOver) {
