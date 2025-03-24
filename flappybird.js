@@ -1,3 +1,15 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("flappy-board");
+    if (!canvas) {
+        console.error("Canvas element not found!");
+        return;
+    }
+    const ctx = canvas.getContext("2d");
+    
+    // Set canvas size
+    canvas.width = 480;
+    canvas.height = 320;
+});
 // Base resolution
 const baseWidth = 360;
 const baseHeight = 640;
