@@ -72,7 +72,7 @@ window.onload = function() {
     gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png"; // Corrected URL
     gameState.topPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";     // Corrected URL
     gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";  // Corrected URL
-
+};
 function startGame() {
     console.log("startGame() is being called");
     // Load sound effects only when game starts (after user interaction)
