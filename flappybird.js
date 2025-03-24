@@ -8,6 +8,8 @@ let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
 
 // Adjust board dimensions to maintain aspect ratio
+let boardWidth, boardHeight;
+
 if (screenWidth / screenHeight > targetAspectRatio) {
     boardHeight = screenHeight;
     boardWidth = boardHeight * targetAspectRatio;
@@ -19,222 +21,190 @@ if (screenWidth / screenHeight > targetAspectRatio) {
 // Calculate a single scaling factor
 const scale = boardWidth / baseWidth;
 
-// Board
-let board;
-let context;
-
-// Bird
-let birdWidth = 40 * scale;
-let birdHeight = 57 * scale;
-let birdX = boardWidth / 8;
-let birdY = boardHeight / 2;
-let birdImg;
-
-let bird = {
-    x: birdX,
-    y: birdY,
-    width: birdWidth,
-    height: birdHeight
+// Game state object to keep track of variables
+const gameState = {
+    board: null,
+    context: null,
+    bird: {
+        x: boardWidth / 8,
+        y: boardHeight / 2,
+        width: 40 * scale,
+        height: 57 * scale
+    },
+    pipeArray: [],
+    pipeWidth: 80 * scale,
+    pipeHeight: 512 * scale,
+    pipeX: boardWidth,
+    pipeY: 0,
+    velocityX: -2 * scale,
+    velocityY: 0,
+    gravity: 0.4 * scale,
+    jumpStrength: -6,
+    scaledJumpStrength: -6 * scale,
+    score: 0,
+    gameOver: false,
+    birdImg: null,
+    topPipeImg: null,
+    bottomPipeImg: null,
+    hitSound: null,
+    dieSound: null,
+    pointSound: null,
+    jumpSound: null,
+    startSound: null
 };
 
-// Pipes
-let pipeArray = [];
-let pipeWidth = 80 * scale;
-let pipeHeight = 512 * scale;
-let pipeX = boardWidth;
-let pipeY = 0;
-
-let topPipeImg;
-let bottomPipeImg;
-
-// Physics
-let pipeSpeed = -2;
-let velocityX = pipeSpeed * scale;
-let velocityY = 0;
-let gravity = 0.4 * scale;
-
-let jumpStrength = -6;
-let scaledJumpStrength = jumpStrength * scale;
-
-let gameOver = false;
-let score = 0;
-
-// Sound effects (MOVED TO TOP)
-let hitSound;
-let dieSound;
-let pointSound;
-let jumpSound;
-let startSound;
-
 window.onload = function() {
-    board = document.getElementById("flappy-board"); // Correct canvas ID
-    board.height = boardHeight;
-    board.width = boardWidth;
-    context = board.getContext("2d");
-}
-function startFlappyGame(canvas) {
-    board = canvas;
-    context = canvas.getContext("2d");
+    gameState.board = document.getElementById("flappy-board"); // Correct canvas ID
+    gameState.board.height = boardHeight;
+    gameState.board.width = boardWidth;
+    gameState.context = gameState.board.getContext("2d");
 
     // Load sound effects
-    hitSound = new Audio("./hit.mp3");
-    dieSound = new Audio("./die.mp3");
-    pointSound = new Audio("./point.mp3");
-    jumpSound = new Audio("./jump.mp3");
-    startSound = new Audio("./start.mp3");
+    gameState.hitSound = new Audio("./hit.mp3");
+    gameState.dieSound = new Audio("./die.mp3");
+    gameState.pointSound = new Audio("./point.mp3");
+    gameState.jumpSound = new Audio("./jump.mp3");
+    gameState.startSound = new Audio("./start.mp3");
 
     // Play start sound when game loads
-    startSound.play();
+    gameState.startSound.play();
 
     // Load images
-    birdImg = new Image();
-    birdImg.src = "./flappybird.png";
-    birdImg.onload = function() {
-        context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
-birdImg.onerror = () => console.log("Bird image failed to load!");
-    }
+    gameState.birdImg = new Image();
+    gameState.birdImg.src = "./flappybird.png";
+    gameState.birdImg.onload = function() {
+        gameState.context.drawImage(gameState.birdImg, gameState.bird.x, gameState.bird.y, gameState.bird.width, gameState.bird.height);
+    };
+    gameState.birdImg.onerror = () => console.log("Bird image failed to load!");
 
-    topPipeImg = new Image();
-    topPipeImg.src = "./toppipe.png";
+    gameState.topPipeImg = new Image();
+    gameState.topPipeImg.src = "./toppipe.png";
 
-    bottomPipeImg = new Image();
-    bottomPipeImg.src = "./bottompipe.png";
+    gameState.bottomPipeImg = new Image();
+    gameState.bottomPipeImg.src = "./bottompipe.png";
 
     requestAnimationFrame(update);
     setInterval(placePipes, 1500);
     document.addEventListener("keydown", moveBird);
 
     window.addEventListener('resize', () => {
-        // ... (resize logic) ...
+        screenWidth = window.innerWidth;
+        screenHeight = window.innerHeight;
+        // Adjust board dimensions to maintain aspect ratio
+        if (screenWidth / screenHeight > targetAspectRatio) {
+            boardHeight = screenHeight;
+            boardWidth = boardHeight * targetAspectRatio;
+        } else {
+            boardWidth = screenWidth;
+            boardHeight = boardWidth / targetAspectRatio;
+        }
+
+        const scale = boardWidth / baseWidth;
+        gameState.board.height = boardHeight;
+        gameState.board.width = boardWidth;
+
+        // Update bird dimensions as well based on the new scale
+        gameState.bird.width = 40 * scale;
+        gameState.bird.height = 57 * scale;
+        gameState.bird.x = boardWidth / 8;
+        gameState.bird.y = boardHeight / 2;
     });
 };
 
 function update() {
-    requestAnimationFrame(update);
-    if (gameOver) {
+    if (gameState.gameOver) {
         return;
     }
-    context.clearRect(0, 0, boardWidth, boardHeight);
+
+    requestAnimationFrame(update);
+    gameState.context.clearRect(0, 0, boardWidth, boardHeight);
 
     // Bird
-    velocityY += gravity;
-    bird.y = Math.max(bird.y + velocityY, 0);
-    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+    gameState.velocityY += gameState.gravity;
+    gameState.bird.y = Math.max(gameState.bird.y + gameState.velocityY, 0);
+    gameState.context.drawImage(gameState.birdImg, gameState.bird.x, gameState.bird.y, gameState.bird.width, gameState.bird.height);
 
-    if (bird.y > board.height) {
-        gameOver = true;
-        dieSound.play(); // Play die sound once
+    if (gameState.bird.y > gameState.board.height) {
+        gameState.gameOver = true;
+        gameState.dieSound.play(); // Play die sound once
     }
 
     // Pipes
-    for (let i = 0; i < pipeArray.length; i++) {
-        let pipe = pipeArray[i];
-        pipe.x += velocityX;
-        context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+    for (let i = 0; i < gameState.pipeArray.length; i++) {
+        let pipe = gameState.pipeArray[i];
+        pipe.x += gameState.velocityX;
+        gameState.context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
 
-        if (!pipe.passed && bird.x > pipe.x + pipe.width) {
-            score += 0.5;
+        if (!pipe.passed && gameState.bird.x > pipe.x + pipe.width) {
+            gameState.score += 1;
             pipe.passed = true;
-            pointSound.play(); // Play point sound once
+            gameState.pointSound.play(); // Play point sound once
         }
 
-        if (detectCollision(bird, pipe)) {
-            if (!gameOver) {
-                hitSound.play(); // Play hit sound once
+        if (detectCollision(gameState.bird, pipe)) {
+            if (!gameState.gameOver) {
+                gameState.hitSound.play(); // Play hit sound once
             }
-            gameOver = true;
+            gameState.gameOver = true;
         }
     }
 
     // Clear pipes
-    while (pipeArray.length > 0 && pipeArray[0].x < -pipeWidth) {
-        pipeArray.shift();
+    while (gameState.pipeArray.length > 0 && gameState.pipeArray[0].x < -gameState.pipeWidth) {
+        gameState.pipeArray.shift();
     }
 
     // Score
-    context.fillStyle = "white";
-    context.font = "45px sans-serif";
-    context.fillText(score, 5, 45);
+    gameState.context.fillStyle = "white";
+    gameState.context.font = "45px sans-serif";
+    gameState.context.fillText(gameState.score, 5, 45);
 
-    if (gameOver) {
-        context.fillText("GAME OVER", 5, 90);
+    if (gameState.gameOver) {
+        gameState.context.fillText("GAME OVER", 5, 90);
     }
 }
 
 function placePipes() {
-    // ... (placePipes function) ...
-}
-
-function moveBird(e) {
-    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
-        velocityY = scaledJumpStrength;
-        jumpSound.play();
-
-        if (gameOver) {
-            bird.y = birdY;
-            pipeArray = [];
-            score = 0;
-            gameOver = false;
-            startSound.play(); // Play start sound on reset
-        }
-    }
-}
-
-
-function detectCollision(a, b) {
-
-    return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
-
-           a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
-
-           a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
-
-           a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
-
-} 
-
-function placePipes() {
-    if (gameOver) {
+    if (gameState.gameOver) {
         return;
     }
 
-    let randomPipeY = pipeY - pipeHeight/4 - Math.random()*(pipeHeight/2);
-    let openingSpace = board.height/3.5; // Adjusted to make openings wider
+    let randomPipeY = gameState.pipeY - gameState.pipeHeight / 4 - Math.random() * (gameState.pipeHeight / 2);
+    let openingSpace = gameState.board.height / 3.5; // Adjusted to make openings wider
 
     let topPipe = {
-        img : topPipeImg,
-        x : pipeX,
-        y : randomPipeY,
-        width : pipeWidth,
-        height : pipeHeight,
-        passed : false
-    }
-    pipeArray.push(topPipe);
+        img: gameState.topPipeImg,
+        x: gameState.pipeX,
+        y: randomPipeY,
+        width: gameState.pipeWidth,
+        height: gameState.pipeHeight,
+        passed: false
+    };
+    gameState.pipeArray.push(topPipe);
 
     let bottomPipe = {
-        img : bottomPipeImg,
-        x : pipeX,
-        y : randomPipeY + pipeHeight + openingSpace,
-        width : pipeWidth,
-        height : pipeHeight,
-        passed : false
-    }
-    pipeArray.push(bottomPipe);
+        img: gameState.bottomPipeImg,
+        x: gameState.pipeX,
+        y: randomPipeY + gameState.pipeHeight + openingSpace,
+        width: gameState.pipeWidth,
+        height: gameState.pipeHeight,
+        passed: false
+    };
+    gameState.pipeArray.push(bottomPipe);
 }
 
 function moveBird(e) {
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
-        //jump
-        velocityY = scaledJumpStrength;
-        jumpSound.play(); // Play jump sound every time
+        gameState.velocityY = gameState.scaledJumpStrength;
+        gameState.jumpSound.play(); // Play jump sound every time
 
-        //reset game
-        if (gameOver) {
-            bird.y = birdY;
-            pipeArray = [];
-            score = 0;
-            gameOver = false;
-            startSound.play();
+        // Reset game
+        if (gameState.gameOver) {
+            gameState.bird.y = gameState.bird.y;
+            gameState.pipeArray = [];
+            gameState.score = 0;
+            gameState.gameOver = false;
+            gameState.startSound.play();
         }
     }
 }
