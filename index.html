@@ -451,6 +451,11 @@ var video = document.getElementById("video");
     	});
 
 </script>
-    <script src="flappybird.js"></script> <!-- Make sure this is here -->
+<script>
+document.addEventListener('click', function() {
+    bgMusic.play();
+}, { once: true }); 
+</script>   
+<script src="flappybird.js"></script> <!-- Make sure this is here -->
 </body>
 </html>
