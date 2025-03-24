@@ -59,21 +59,15 @@ window.onload = function() {
     gameState.board.width = boardWidth;
     gameState.context = gameState.board.getContext("2d");
 
-    // Load sound effects
-    gameState.hitSound = new Audio("./hit.mp3");
-    gameState.dieSound = new Audio("./die.mp3");
-    gameState.pointSound = new Audio("./point.mp3");
-    gameState.jumpSound = new Audio("./jump.mp3");
-    gameState.startSound = new Audio("./start.mp3");
+    // Load images (on page load)
+    loadImages();
+};
 
-    // Play start sound when game loads
-    gameState.startSound.play();
-
-    // Load images
+function loadImages() {
     gameState.birdImg = new Image();
     gameState.birdImg.src = "./flappybird.png";
     gameState.birdImg.onload = function() {
-        gameState.context.drawImage(gameState.birdImg, gameState.bird.x, gameState.bird.y, gameState.bird.width, gameState.bird.height);
+        console.log("Bird image loaded");
     };
     gameState.birdImg.onerror = () => console.log("Bird image failed to load!");
 
@@ -82,6 +76,17 @@ window.onload = function() {
 
     gameState.bottomPipeImg = new Image();
     gameState.bottomPipeImg.src = "./bottompipe.png";
+}
+
+function startGame() {
+    // Load sound effects only when game starts (after user interaction)
+    gameState.hitSound = new Audio("./hit.mp3");
+    gameState.dieSound = new Audio("./die.mp3");
+    gameState.pointSound = new Audio("./point.mp3");
+    gameState.jumpSound = new Audio("./jump.mp3");
+    gameState.startSound = new Audio("./start.mp3");
+
+    gameState.startSound.play(); // Play start sound when game starts
 
     requestAnimationFrame(update);
     setInterval(placePipes, 1500);
@@ -90,7 +95,6 @@ window.onload = function() {
     window.addEventListener('resize', () => {
         screenWidth = window.innerWidth;
         screenHeight = window.innerHeight;
-
         // Adjust board dimensions to maintain aspect ratio
         if (screenWidth / screenHeight > targetAspectRatio) {
             boardHeight = screenHeight;
@@ -110,7 +114,7 @@ window.onload = function() {
         gameState.bird.x = boardWidth / 8;
         gameState.bird.y = boardHeight / 2;
     });
-};
+}
 
 function update() {
     if (gameState.gameOver) {
