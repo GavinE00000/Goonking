@@ -53,41 +53,6 @@ const gameState = {
     startSound: null
 };
 
-window.onload = function() {
-    // Initialize the canvas and context
-    gameState.board = document.getElementById("flappy-board");
-    gameState.board.height = boardHeight;
-    gameState.board.width = boardWidth;
-    gameState.context = gameState.board.getContext("2d");
-
-    // Load images
-    gameState.birdImg = new Image();
-    gameState.topPipeImg = new Image();
-    gameState.bottomPipeImg = new Image();
-
-    gameState.birdImg.onload = () => {
-        console.log("Bird image loaded");
-    };
-
-    gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png"; // Corrected URL
-    gameState.topPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";     // Corrected URL
-    gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";  // Corrected URL
-};
-function startGame() {
-    console.log("startGame() is being called");
-    // Load sound effects only when game starts (after user interaction)
-    gameState.hitSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/hit.mp3");
-    gameState.dieSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/die.mp3");
-    gameState.pointSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/point.mp3");
-    gameState.jumpSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/jump.mp3");
-    gameState.startSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/start.mp3");
-
-    gameState.startSound.play(); // Play start sound when game starts
-
-    requestAnimationFrame(update);
-    setInterval(placePipes, 1500);
-    document.addEventListener("keydown", moveBird);
-
 window.addEventListener('resize', () => {
     screenWidth = window.innerWidth;
     screenHeight = window.innerHeight;
@@ -116,7 +81,46 @@ window.addEventListener('resize', () => {
     gameState.scaledJumpStrength = -6 * scale;
 });
 
-function update() {
+window.onload = function() {
+    // Initialize the canvas and context
+    gameState.board = document.getElementById("flappy-board");
+    gameState.board.height = boardHeight;
+    gameState.board.width = boardWidth;
+    gameState.context = gameState.board.getContext("2d");
+
+    // Load images
+    gameState.birdImg = new Image();
+    gameState.topPipeImg = new Image();
+    gameState.bottomPipeImg = new Image();
+
+    gameState.birdImg.onload = () => {
+        console.log("Bird image loaded");
+    };
+
+    gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png"; // Corrected URL
+    gameState.topPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";     // Corrected URL
+    gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";  // Corrected URL
+
+    startGame(); // Start the game.
+};
+
+function startGame() {
+    console.log("startGame() is being called");
+    // Load sound effects only when game starts (after user interaction)
+    gameState.hitSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/hit.mp3");
+    gameState.dieSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/die.mp3");
+    gameState.pointSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/point.mp3");
+    gameState.jumpSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/jump.mp3");
+    gameState.startSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/start.mp3");
+
+    gameState.startSound.play(); // Play start sound when game starts
+
+    requestAnimationFrame(update);
+    setInterval(placePipes, 1500);
+    document.addEventListener("keydown", moveBird);
+
+
+function update() { // Added missing curly brace here.
     if (gameState.gameOver) {
         return;
     }
@@ -167,6 +171,7 @@ function update() {
     if (gameState.gameOver) {
         gameState.context.fillText("GAME OVER", 5, 90);
     }
+}
 }
 
 function placePipes() {
