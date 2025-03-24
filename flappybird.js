@@ -55,11 +55,14 @@ const gameState = {
 
 // Function to initialize and scale the canvas
 function initializeCanvas() {
-    gameState.board = document.getElementById("flappy-board");
     if (!gameState.board) {
-        console.error("Canvas element not found!");
-        return false; // Return false if canvas is not found
+        gameState.board = document.getElementById("flappy-board");
+         if (!gameState.board) {
+            console.error("Canvas element not found!");
+            return false; // Return false if canvas is not found
+        }
     }
+
     gameState.board.height = boardHeight;
     gameState.board.width = boardWidth;
     gameState.context = gameState.board.getContext("2d");
@@ -243,10 +246,12 @@ window.onload = () => {
     if (initializeCanvas()) { // Only proceed if canvas initialization was successful
         loadAssets(() => {
             // All assets loaded, but don't start game until spacebar
-            gameState.context.fillStyle = "white";
-            gameState.context.font = "40px Impact";
-            gameState.context.textAlign = "center";
-            gameState.context.fillText("Press Space to Start", gameState.board.width / 2, gameState.board.height / 2);
+            if(gameState.context){
+                gameState.context.fillStyle = "white";
+                gameState.context.font = "40px Impact";
+                gameState.context.textAlign = "center";
+                gameState.context.fillText("Press Space to Start", gameState.board.width / 2, gameState.board.height / 2);
+            }
         });
 
         document.addEventListener('keydown', handleKeyDown);
