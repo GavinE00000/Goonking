@@ -283,11 +283,24 @@
     	<iframe id="scratch-iframe" src="https://scratch.mit.edu/projects/1148127326/embed/?autostart=true" width="640" height="480" allow="autoplay; fullscreen"></iframe>
 	</div>
 </div>
-<div id="flappy-overlay">
-    <div class="iframe-container">
-        <iframe id="flappy-iframe" src="flappybird.html"></iframe>
-        <button id="back-btn">Back</button>
+<div id="flappy-overlay" style="display: none; position: fixed; inset: 0; background-color: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+
+ 
+
+    <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+ 
+
+        <h2>Flappy Bird Game</h2>
+ 
+
+        <canvas id="flappy-board" width="360" height="640" style="border: 2px solid black;"></canvas>
+ 
+
+        <button id="flappy-back-btn">Back to Site</button>
+ 
+
     </div>
+ 
 </div>
 	
 <a href="#" id="flappy-link">Play Flappy Bird</a>
