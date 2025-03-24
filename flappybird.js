@@ -90,6 +90,7 @@ window.onload = function() {
     window.addEventListener('resize', () => {
         screenWidth = window.innerWidth;
         screenHeight = window.innerHeight;
+
         // Adjust board dimensions to maintain aspect ratio
         if (screenWidth / screenHeight > targetAspectRatio) {
             boardHeight = screenHeight;
