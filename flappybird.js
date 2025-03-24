@@ -65,26 +65,26 @@ window.onload = function() {
 
 function loadImages() {
     gameState.birdImg = new Image();
-    gameState.birdImg.src = "./flappybird.png";
+    gameState.birdImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/flappybird.png";
     gameState.birdImg.onload = function() {
         console.log("Bird image loaded");
     };
     gameState.birdImg.onerror = () => console.log("Bird image failed to load!");
 
     gameState.topPipeImg = new Image();
-    gameState.topPipeImg.src = "./toppipe.png";
+    gameState.topPipeImg.src = ".https://raw.githubusercontent.com/GavinE00000/Goonking/main/toppipe.png";
 
     gameState.bottomPipeImg = new Image();
-    gameState.bottomPipeImg.src = "./bottompipe.png";
+    gameState.bottomPipeImg.src = "https://raw.githubusercontent.com/GavinE00000/Goonking/main/bottompipe.png";
 }
 
 function startGame() {
     // Load sound effects only when game starts (after user interaction)
-    gameState.hitSound = new Audio("./hit.mp3");
-    gameState.dieSound = new Audio("./die.mp3");
-    gameState.pointSound = new Audio("./point.mp3");
-    gameState.jumpSound = new Audio("./jump.mp3");
-    gameState.startSound = new Audio("./start.mp3");
+    gameState.hitSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/hit.mp3");
+    gameState.dieSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/die.mp3");
+    gameState.pointSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/point.mp3");
+    gameState.jumpSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/jump.mp3");
+    gameState.startSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/start.mp3");
 
     gameState.startSound.play(); // Play start sound when game starts
 
