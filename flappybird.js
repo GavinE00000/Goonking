@@ -79,6 +79,7 @@ function loadImages() {
 }
 
 function startGame() {
+    console.log("startGame() is being called");
     // Load sound effects only when game starts (after user interaction)
     gameState.hitSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/hit.mp3");
     gameState.dieSound = new Audio("https://raw.githubusercontent.com/GavinE00000/Goonking/main/die.mp3");
