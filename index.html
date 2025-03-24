@@ -280,17 +280,18 @@ const ctx = canvas.getContext('2d');
 	const flappyOverlay = document.getElementById('flappy-overlay');
 	const flappyBackBtn = document.getElementById('flappy-back-btn');
 	const flappyLink = document.getElementById('flappy-link');
-	flappyLink.addEventListener('click', function(e) {
-    	e.preventDefault();
-    	flappyOverlay.style.display = 'flex';
-    	bgMusic.pause();
-    	document.body.style.overflow = 'hidden';
-	});
-	flappyBackBtn.addEventListener('click', function() {
-    	flappyOverlay.style.display = 'none';
-    	bgMusic.play();
-    	document.body.style.overflow = 'auto';
-	});
+    flappyLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        flappyOverlay.style.display = 'flex'; // Show the overlay
+        bgMusic.pause(); // Pause the background music
+        document.body.style.overflow = 'hidden'; // Prevent scrolling during the game
+    });
+
+    flappyBackBtn.addEventListener('click', function() {
+        flappyOverlay.style.display = 'none'; // Hide the overlay
+        bgMusic.play(); // Resume the background music
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+    });
 </script>
 
 	<script>
