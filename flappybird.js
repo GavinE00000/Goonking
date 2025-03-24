@@ -104,6 +104,7 @@ window.onload = function() {
     startGame(); // Start the game.
 };
 
+
 function startGame() {
     console.log("startGame() is being called");
     // Load sound effects only when game starts (after user interaction)
@@ -119,14 +120,13 @@ function startGame() {
     setInterval(placePipes, 1500);
     document.addEventListener("keydown", moveBird);
 
+    function update() { // Added missing curly brace here.
+        if (gameState.gameOver) {
+            return;
+        }
 
-function update() { // Added missing curly brace here.
-    if (gameState.gameOver) {
-        return;
-    }
-
-    requestAnimationFrame(update);
-    gameState.context.clearRect(0, 0, boardWidth, boardHeight);
+        requestAnimationFrame(update);
+        gameState.context.clearRect(0, 0, boardWidth, boardHeight);
 
     // Bird
     gameState.velocityY += gameState.gravity;
